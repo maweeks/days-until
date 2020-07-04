@@ -9,6 +9,23 @@
         <input type="checkbox" id="refresh" name="refresh" value="refresh" onchange="updateRemaining();" />
         <label for="refresh"> Refresh</label>
     </body>
+    <style type="text/css">
+        body {
+            color: #333;
+        }
+        h1 {
+            font-size: 48px;
+        }
+        h2 {
+            font-size: 30px;
+        }
+        @media screen and (prefers-color-scheme: dark) {
+            body {
+                background-color: #333;
+                color: #f6b;
+            }
+        }
+    </style>
     <script type="text/javascript">
         let date = new URL(window.location.href).searchParams.get('date');
         date = date ? new Date(date) : 0;
