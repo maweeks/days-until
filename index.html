@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <h1 id="title">Days until:</h1>
+        <h2 id="remaining">...</h2>
+        <input type="checkbox" id="refresh" name="refresh" value="refresh" onchange="updateRemaining();" />
+        <label for="refresh"> Refresh</label>
+    </body>
+    <script type="text/javascript">
+        let date = new URL(window.location.href).searchParams.get('date');
+        date = date ? new Date(date) : 0;
+        date = new Date(date);
+
+        if (date > new Date()) {
+            document.getElementById('title').innerHTML = 'Days until: ' + date.toISOString().substring(0, 10);
+        }
+
+        updateRemaining();
+
+        function updateRemaining() {
+            let dateString = '';
+            const currentDate = new Date();
+            const SECONDS_IN_MS = 1000;
+            const MINUTES_IN_MS = SECONDS_IN_MS * 60;
+            const HOURS_IN_MS = MINUTES_IN_MS * 60;
+            const DAYS_IN_MS = HOURS_IN_MS * 24;
+
+            let remainingDiff = date - currentDate;
+
+            const DAYS_DIFF = Math.floor(remainingDiff / DAYS_IN_MS);
+            remainingDiff = remainingDiff - DAYS_DIFF * DAYS_IN_MS;
+
+            const HOURS_DIFF = Math.floor(remainingDiff / HOURS_IN_MS);
+            remainingDiff = remainingDiff - HOURS_DIFF * HOURS_IN_MS;
+
+            const MINUTES_DIFF = Math.floor(remainingDiff / MINUTES_IN_MS);
+            remainingDiff = remainingDiff - MINUTES_DIFF * MINUTES_IN_MS;
+
+            const SECONDS_DIFF = Math.floor(remainingDiff / SECONDS_IN_MS);
+
+            document.getElementById('remaining').innerHTML =
+                DAYS_DIFF + ' days ' + HOURS_DIFF + ' hours ' + MINUTES_DIFF + ' minutes ' + SECONDS_DIFF + ' seconds';
+
+            if (document.getElementById('refresh').checked) setTimeout(updateRemaining, 1000);
+        }
+    </script>
+</html>
