@@ -27,15 +27,20 @@
         }
     </style>
     <script type="text/javascript">
-        let date = new URL(window.location.href).searchParams.get('date');
-        date = date ? new Date(date) : 0;
-        date = new Date(date);
+        let date = new Date(new URL(window.location.href).searchParams.get('date'));
+        let title = new URL(window.location.href).searchParams.get('title');
+
+        title = title ? `"${title}"` : '';
+
+        title += `<br/>${date.toISOString().substring(0, 10)} ${date.toISOString().substring(11, 16)}`;
 
         if (date > new Date()) {
-            document.getElementById('title').innerHTML = 'Days until: ' + date.toISOString().substring(0, 10);
+            title = 'Days until: ' + title;
         } else {
-            document.getElementById('title').innerHTML = 'Days since: ' + date.toISOString().substring(0, 10);
+            title = 'Days since: ' + title;
         }
+
+        document.getElementById('title').innerHTML = title;
 
         updateRemaining();
 
